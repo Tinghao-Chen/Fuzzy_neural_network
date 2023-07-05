@@ -35,7 +35,7 @@ class FuzzyLayer(nn.Module):
             # 3.求平方根求和，目的是均方误差，并统计本次计算的全部误差
             # 4.用欧拉数e应用于标量，自然底数
             #输出是计算后的模糊隶属值，公式可以有改动
-            fuzzy_out_i = torch.exp(-torch.sum(torch.sqrt((variable - self.fuzzy_degree) / (self.sigma ** 2))))
+            fuzzy_out_i = torch.exp(-torch.sum((variable - self.fuzzy_degree)**2 / (self.sigma ** 2)))
 
             # 检查计算结果是不是nan，如果不是nan，就获取模糊隶属度计算结果，如果是nan，就将输入值记录到模糊隶属度中。
             if torch.isnan(fuzzy_out_i):
