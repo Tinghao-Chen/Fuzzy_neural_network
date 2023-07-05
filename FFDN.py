@@ -53,10 +53,6 @@ class FusedFuzzyDeepNet(nn.Module):
         for col_idx in range(fuzz_input.size()[1]):
             # 从当前列索引处选择一个列向量
             col_vector = fuzz_input[:, col_idx:col_idx + 1]
-            # .unsqueeze(0).view(-1, 1)的作用是将原始的列向量 col_vector 调整为形状为 (batch_size, 1) 的张量 fuzz_col_vector。
-            # .unsqueeze(0)这个操作是在索引为0的维度上（第一个维度）上增加一个维度
-            # .view(-1, 1)这个操作的目的是将张量从 (1, batch_size, 1) 转换为 (batch_size, 1) 的形状。
-            # 这样做可能是为了与后续的计算和操作兼容，或者符合网络结构的要求。
             fuzz_col_vector = self.fuzzy_rule_layers[col_idx](col_vector).unsqueeze(0).view(-1, 1)
             # 输出的某行就是这个操作后的统一化向量
             fuzz_output[:, col_idx:col_idx + 1] = fuzz_col_vector
